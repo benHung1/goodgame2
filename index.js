@@ -7,6 +7,9 @@ window.onload = function () {
 
 var time = document.getElementById("timeBox");
 var rps = document.getElementById("rpsWrapper");
+var rpsUserWins = document.getElementById("rpsUserWins");
+var rpsUserLoses = document.getElementById("rpsUserLoses");
+var rpsUserDraw = document.getElementById("rpsUserDraw");
 
 function timeDown() {
   let timer = 4;
@@ -32,17 +35,18 @@ var choices = ["r", "p", "s"];
 var result = document.getElementById("result");
 var firstTimer = document.getElementById("timer");
 var part1Btn = document.getElementById("part1-btn");
-var firstTime;
 
 // 提示即將轉場
 var show = document.getElementById("show");
 var isPaused = true;
-var myChoice = document.getElementById("my-choice");
+var firstTime;
+
+var finalResult = document.getElementById("finalResult")
 
 function firstTimerDown() {
-  var firstTime = 5;
+  var firstTime = 10;
   var firstTimerMinus = setInterval(() => {
-    if (rps.style.display == "block" && firstTime >= 0 && isPaused) {
+    if (rps.style.display == "block" || rpsUserWins.style.display == "block" || rpsUserLoses.style.display == "block"  && firstTime >= 0 && isPaused) {
       firstTimer.innerText = "出拳時間還有" + firstTime + "秒";
       firstTime--;
       // 點擊照片後暫停計時
@@ -54,18 +58,21 @@ function firstTimerDown() {
         setTimeout(() => {
           isPaused = true;
           rpsPart2();
-        }, 4000);
+        }, 1000);
       });
-
-      if (firstTime <= -1 && result.innerText == "") {
+      if(firstTime <= -1) {
+        clearInterval(firstTimerMinus);
+        document.getElementById("part1-btn").style.pointerEvents = "none";
+      }
+      if (firstTime <= -1 && result.innerText == "" || finalResult == "") {
         result.innerHTML = "失敗 超時了";
+        finalResult.innerHTML = "失敗 超時了";
         clearInterval(firstTimerMinus);
         // 超時需停止點擊事件
         document.getElementById("part1-btn").style.pointerEvents = "none";
       }
     }
   }, 1000);
-  firstTime = 5;
 }
 
 function rpsPart1() {
@@ -137,16 +144,18 @@ function rpsPart1() {
     });
 }
 
-var rpsUserWins = document.getElementById("rpsUserWins");
-var rpsUserLoses = document.getElementById("rpsUserLoses");
-var rpsUserDraw = document.getElementById("rpsUserDraw");
+var myChoice = document.getElementsByClassName("myChoice")[0];
+var part2Btn = document.getElementsByClassName("part2btn")[0];
+var Timer = document.getElementById("Timer");
 
 function rpsPart2() {
+
   // 判斷猜拳輸贏後 該顯示哪個畫面
 
   if ((result.innerText = "贏了 底子可以")) {
     rps.style.display = "none";
     rpsUserWins.style.display = "block";
+    
   } else if ((result.innerText = "輸了 底子不行")) {
     rps.style.display = "none";
     rpsUserLoses.style.display = "block";
@@ -154,10 +163,20 @@ function rpsPart2() {
     rps.style.display = "none";
     rpsUserDraw.style.display = "block";
   }
-  document
-    .getElementsByClassName("part2btn")[0]
+
+  // 進攻畫面邏輯
+  part2Btn
     .addEventListener("click", function (e) {
-      console.log(e.target);
+      let iId = e.target.id;
+      document.getElementById("attack").src = "./shame.png"
+      myChoice.src = iId + ".png"
+      if (iId == "a") {
+        finalResult.innerText = "恭喜 準備進入下一輪"
+      } else {
+        finalResult.innerText = "sorry 出去再來"
+      }  
+      // 都出完後需停止點擊事件
+      part2Btn.style.pointerEvents = "none";
     });
 }
 
