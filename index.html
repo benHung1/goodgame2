@@ -17,7 +17,7 @@
         <br />
         <h1>殭屍的殭屍的殭屍猜</h1>
         <div class="result">
-          <h1 id="result">請出拳</h1>
+          <h1 id="result"></h1>
           <img id="my-choice" draggable="false" />
           <h1 id="timer"></h1>
         </div>
@@ -32,6 +32,12 @@
             <img id="d" src="./d.png" draggable="false" />
           </div>
         </div>
+        <div id="show">
+          <div>
+            <h1>猜拳結束</h1>
+            <h1>3秒後自動跳轉...</h1>
+          </div>
+        </div>
       </section>
       <!-- 猜拳勝利後到這裡 -->
       <section id="rpsUserWins" style="display: none">
@@ -42,7 +48,7 @@
         <div class="result">
           <h1 id="finalResult"></h1>
           <img id="myChoice" draggable="false" />
-          <h1 id="finalTimer"></h1>
+          <h1 id="Timer"></h1>
         </div>
         <div id="second">
           <div id="part1-btn">
@@ -50,7 +56,7 @@
             <img id="p1" src="./p.png" draggable="false" />
             <img id="s1" src="./s.png" draggable="false" />
           </div>
-          <div id="part2-btn">
+          <div id="part2Btn" class="part2btn">
             <img id="a1" src="./a.png" draggable="false" />
             <img id="d1" src="./d.png" draggable="false" />
           </div>

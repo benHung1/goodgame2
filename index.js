@@ -1,7 +1,6 @@
 window.onload = function () {
   timeDown();
   rpsPart1();
-  clear();
 };
 
 // timer 倒數
@@ -34,11 +33,11 @@ var result = document.getElementById("result");
 var firstTimer = document.getElementById("timer");
 var part1Btn = document.getElementById("part1-btn");
 var firstTime;
-var isPaused = false;
 
 // 提示即將轉場
 var show = document.getElementById("show");
 var isPaused = true;
+var myChoice = document.getElementById("my-choice");
 
 function firstTimerDown() {
   var firstTime = 5;
@@ -49,22 +48,24 @@ function firstTimerDown() {
       // 點擊照片後暫停計時
 
       part1Btn.addEventListener("click", function () {
-        // clearInterval(firstTimerMinus);
         isPaused = false;
-        if (isPaused == false) {
-          console.log("hello");
-        }
+        setTimeout("show.style.visibility = 'visible' ", 2000);
+        setTimeout("show.style.visibility = 'hidden' ", 4000);
+        setTimeout(() => {
+          isPaused = true;
+          rpsPart2();
+        }, 4000);
       });
-      if (firstTime <= -1) {
+
+      if (firstTime <= -1 && result.innerText == "") {
         result.innerHTML = "失敗 超時了";
         clearInterval(firstTimerMinus);
-
         // 超時需停止點擊事件
-
         document.getElementById("part1-btn").style.pointerEvents = "none";
       }
     }
   }, 1000);
+  firstTime = 5;
 }
 
 function rpsPart1() {
@@ -119,7 +120,7 @@ function rpsPart1() {
 
         if (imgId === "s" && opponent === "s") {
           result.innerText = "平手!";
-        } else if (imgId === "p" && opponent === "s") {
+        } else if (imgId === "s" && opponent === "r") {
           result.innerText = "輸了 底子不行";
         } else {
           result.innerText = "贏了 底子可以";
@@ -127,10 +128,40 @@ function rpsPart1() {
       }
       // 都出完後需停止點擊事件
       document.getElementById("part1-btn").style.pointerEvents = "none";
+
+      // 清除第一關資料
+
+      clearPart1();
+
+      // 回到某一個場景
     });
 }
 
-function clear() {
+var rpsUserWins = document.getElementById("rpsUserWins");
+var rpsUserLoses = document.getElementById("rpsUserLoses");
+var rpsUserDraw = document.getElementById("rpsUserDraw");
+
+function rpsPart2() {
+  // 判斷猜拳輸贏後 該顯示哪個畫面
+
+  if ((result.innerText = "贏了 底子可以")) {
+    rps.style.display = "none";
+    rpsUserWins.style.display = "block";
+  } else if ((result.innerText = "輸了 底子不行")) {
+    rps.style.display = "none";
+    rpsUserLoses.style.display = "block";
+  } else {
+    rps.style.display = "none";
+    rpsUserDraw.style.display = "block";
+  }
+  document
+    .getElementsByClassName("part2btn")[0]
+    .addEventListener("click", function (e) {
+      console.log(e.target);
+    });
+}
+
+function clearPart1() {
   // 如果不在第一關 則清除第一關資料
   setTimeout(() => {
     document.getElementById("r").src = "r.png";
