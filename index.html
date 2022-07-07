@@ -14,12 +14,12 @@
     <h1 id="timer"></h1>
     <div id="rpsContainer">
       <section id="rpsWrapper">
-        <img id="choice" draggable="false" />
+        <img id="choice" draggable="false" src="./plz.png" />
         <br />
         <h1>殭屍的殭屍的殭屍猜</h1>
         <div class="result">
-          <h1 id="result"></h1>
-          <img id="my-choice" draggable="false" />
+          <h1 id="result">請出拳</h1>
+          <img id="my-choice" draggable="false" src="./plz.png" />
         </div>
         <div id="choices">
           <div id="part1-btn">
@@ -32,22 +32,27 @@
             <img id="d" src="./d.png" draggable="false" />
           </div>
         </div>
-        <div id="show">
+        <!-- <div id="show">
           <div>
             <h1>猜拳結束</h1>
             <h1>3秒後自動跳轉...</h1>
           </div>
-        </div>
+        </div> -->
       </section>
       <!-- 猜拳勝利後到這裡 -->
       <section id="rpsUserWins" style="display: none">
         <h1>hhihihihi</h1>
-        <img id="attack" draggable="false" />
+        <img id="attack" draggable="false" src="/plz.png" />
         <br />
         <h1>殭屍的咚咚 殭屍猜</h1>
         <div class="result">
-          <h1 id="finalResult"></h1>
-          <img id="my-choice" class="myChoice" draggable="false" />
+          <h1 id="finalResult">請選擇</h1>
+          <img
+            id="userWinChoice"
+            class="myChoice"
+            draggable="false"
+            src="/plz.png"
+          />
         </div>
         <div id="second">
           <div id="part1-btn">
@@ -55,9 +60,9 @@
             <img id="p" src="./p.png" draggable="false" />
             <img id="s" src="./s.png" draggable="false" />
           </div>
-          <div id="part2-btn" class="part2btn">
-            <img id="a" src="./a.png" draggable="false" />
-            <img id="d" src="./d.png" draggable="false" />
+          <div id="part2-btn" class="userWinsBtn">
+            <img id="a" src="./a.png" draggable="false" class="a" />
+            <img id="d" src="./d.png" draggable="false" class="d" />
           </div>
         </div>
         <h1 id="myScore">0</h1>
@@ -65,23 +70,23 @@
       <!-- 猜拳失敗後到這裡 -->
       <section id="rpsUserLoses" style="display: none">
         <h1>nononono</h1>
-        <img id="defence" draggable="false" />
+        <img id="defence" draggable="false" src="/plz.png" />
         <br />
         <h1>殭屍的咚咚 殭屍猜</h1>
         <div class="result">
-          <h1 id="finalResultSecond"></h1>
-          <img id="mySecondChoice" draggable="false" />
+          <h1 id="finalResultSecond">請選擇</h1>
+          <img id="userLosesChoice" draggable="false" src="/plz.png" />
           <h1 id="finalTimerSecond"></h1>
         </div>
         <div id="third">
           <div id="part1-btn">
-            <img id="r2" src="./r.png" draggable="false" />
-            <img id="p2" src="./p.png" draggable="false" />
-            <img id="s2" src="./s.png" draggable="false" />
+            <img id="r" src="./r.png" draggable="false" />
+            <img id="p" src="./p.png" draggable="false" />
+            <img id="s" src="./s.png" draggable="false" />
           </div>
-          <div id="part2-btn">
-            <img id="a2" src="./a.png" draggable="false" />
-            <img id="d2" src="./d.png" draggable="false" />
+          <div id="part2-btn" class="userLosesBtn">
+            <img id="a" src="./a.png" draggable="false" />
+            <img id="d" src="./d.png" draggable="false" />
           </div>
         </div>
         <h1 id="loseMyScore">0</h1>

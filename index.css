@@ -13,7 +13,9 @@ body {
 #defence,
 #my-choice,
 .my-choice-container,
-#my-secondChoice {
+#my-secondChoice,
+#userWinChoice,
+#userLosesChoice {
   width: 240px;
   height: 240px;
   margin: 0 auto;
@@ -25,11 +27,11 @@ body {
 
 #timer {
   position: fixed;
-  bottom: -2%;
+  bottom: 0;
   right: 0;
 }
 
-#show {
+/* #show {
   position: absolute;
   left: 50%;
   top: 0;
@@ -42,7 +44,7 @@ body {
   justify-content: center;
   align-items: center;
   visibility: hidden;
-}
+} */
 
 #rpsWrapper {
 }
