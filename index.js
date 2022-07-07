@@ -1,7 +1,7 @@
 window.onload = function () {
   timeDown();
+
   rpsPart1();
-  rpsPart2();
 };
 
 // timer 倒數
@@ -11,23 +11,33 @@ var rps = document.getElementById("rpsWrapper");
 var rpsUserWins = document.getElementById("rpsUserWins");
 var rpsUserLoses = document.getElementById("rpsUserLoses");
 var rpsUserDraw = document.getElementById("rpsUserDraw");
+var timer;
 
-function timeDown() {
-  let timer = 4;
-  rps.style.display = "none";
+// function timeDown() {
+//   timer = 4;
+//   rps.style.display = "none";
 
-  var timeMinus = setInterval(() => {
-    timer--;
-    time.innerText = timer;
-    if (timer <= 0) {
-      clearInterval(timeMinus);
-      timer = 3;
-      time.innerText = timer;
-      time.style.display = "none";
-      rps.style.display = "block";
-    }
-  }, 1000);
-}
+//   var timeMinus = setInterval(() => {
+//     timer--;
+//     time.innerText = timer;
+//     if (
+//       timer <= 0 &&
+//       rpsUserWins.style.display == "none" &&
+//       rpsUserLoses.style.display == "none" &&
+//       rpsUserDraw.style.display == "none"
+//     ) {
+//       timer = 3;
+//       time.innerText = timer;
+//       clearInterval(timeMinus);
+//       time.style.display = "none";
+//       rps.style.display = "block";
+//     } else if (timer <= 0) {
+//       timer = 3;
+//       time.innerText = timer;
+//       clearInterval(timeMinus);
+//     }
+//   }, 1000);
+// }
 
 // 第一關計時器
 
@@ -50,79 +60,77 @@ var part2ImgDefence = document.getElementById("defence");
 var finalResult = document.getElementById("finalResult");
 var finalResultSecond = document.getElementById("finalResultSecond");
 
-function firstTimerDown() {
-  var firstTime = 5;
-  var firstTimerMinus = setInterval(() => {
-    if (
-      rps.style.display == "block" ||
-      rpsUserWins.style.display == "block" ||
-      (rpsUserLoses.style.display == "block" && firstTime >= 0 && isPaused)
-    ) {
-      firstTimer.innerText = "出拳時間還有" + firstTime + "秒";
-      firstTime--;
-      // 點擊照片後暫停計時
+// function firstTimerDown() {
+//   // firstTime = 15;
+//   // var firstTimerMinus = setInterval(() => {
+//   //   if (firstTime >= 0) {
+//   //     firstTimer.innerText = "出拳時間還有" + firstTime + "秒";
+//   //     firstTime--;
 
-      // 第一關猜拳 click邏輯
+//       // // 第一關猜拳 click邏輯
 
-      part1Btn.addEventListener("click", function () {
-        isPaused = false;
-        // setTimeout("show.style.visibility = 'visible' ", 2000);
-        // setTimeout("show.style.visibility = 'hidden' ", 4000);
-        setTimeout(() => {
-          isPaused = true;
-          rpsPart2();
-        }, 1000);
-      });
-      if (firstTime <= -1) {
-        clearInterval(firstTimerMinus);
-        document.getElementById("part1-btn").style.pointerEvents = "none";
-        part2Btn.style.pointerEvents = "none";
-      }
-      if (firstTime <= -1 && result.innerText == "請出拳") {
-        result.innerText = "失敗 超時了";
-        clearInterval(firstTimerMinus);
+//       // part1Btn.addEventListener("click", function () {
+//       //   isPaused = false;
+//       //   // setTimeout("show.style.visibility = 'visible' ", 2000);
+//       //   // setTimeout("show.style.visibility = 'hidden' ", 4000);
+//       //   setTimeout(() => {
+//       //     isPaused = true;
+//       //     rpsPart2();
+//       //   }, 1000);
+//       // });
+//       // if (result.innerText == "平手!") {
+//       //   clearInterval(firstTimerMinus);
+//       // }
+//       // if (firstTime <= -1) {
+//       //   clearInterval(firstTimerMinus);
+//       //   document.getElementById("part1-btn").style.pointerEvents = "none";
+//       //   part2Btn.style.pointerEvents = "none";
+//       //   part2BtnLoses.style.pointerEvents = "none";
+//       // }
+//       // if (firstTime <= -1 && result.innerText == "請出拳") {
+//       //   result.innerText = "失敗 超時了";
+//       //   clearInterval(firstTimerMinus);
 
-        // 超時需停止點擊事件
+//       //   // 超時需停止點擊事件
 
-        document.getElementById("part1-btn").style.pointerEvents = "none";
-      }
+//       //   document.getElementById("part1-btn").style.pointerEvents = "none";
+//       // }
 
-      // 第二關 userWin click 邏輯
+//       // // 第二關 userWin click 邏輯
 
-      part2Btn.addEventListener("click", function () {
-        clearInterval(firstTimerMinus);
-      });
+//       // part2Btn.addEventListener("click", function () {
+//       //   clearInterval(firstTimerMinus);
+//       // });
 
-      if (firstTime <= -1 && finalResult.innerText == "請選擇") {
-        finalResult.innerText = "失敗 超時了";
-        clearInterval(firstTimerMinus);
+//       // if (firstTime <= -1 && finalResult.innerText == "請選擇") {
+//       //   finalResult.innerText = "失敗 超時了";
+//       //   clearInterval(firstTimerMinus);
 
-        // 超時需停止點擊事件
+//       //   // 超時需停止點擊事件
 
-        part2Btn.style.pointerEvents = "none";
-      }
+//       //   part2Btn.style.pointerEvents = "none";
+//       // }
 
-      // 第二關 userLoses click 邏輯
+//       // // 第二關 userLoses click 邏輯
 
-      part2BtnLoses.addEventListener("click", function () {
-        clearInterval(firstTimerMinus);
-      });
+//       // part2BtnLoses.addEventListener("click", function () {
+//       //   clearInterval(firstTimerMinus);
+//       // });
 
-      if (firstTime <= -1 && finalResultSecond.innerText == "請選擇") {
-        finalResultSecond.innerText = "失敗 超時了";
-        clearInterval(firstTimerMinus);
+//       // if (firstTime <= -1 && finalResultSecond.innerText == "請選擇") {
+//       //   finalResultSecond.innerText = "失敗 超時了";
+//       //   clearInterval(firstTimerMinus);
 
-        // 超時需停止點擊事件
+//       //   // 超時需停止點擊事件
 
-        part2BtnLoses.style.pointerEvents = "none";
-      }
-    }
-  }, 1000);
-}
+//       //   part2BtnLoses.style.pointerEvents = "none";
+//       // }
+//     }
+//   }, 1000);
+// }
 
 function rpsPart1() {
   // 進畫面開始倒數
-
   firstTimerDown();
 
   // 點擊下方出拳
@@ -180,12 +188,6 @@ function rpsPart1() {
       }
       // 都出完後需停止點擊事件
       document.getElementById("part1-btn").style.pointerEvents = "none";
-
-      // 清除第一關資料
-
-      clearPart1();
-
-      // 回到某一個場景
     });
 }
 
@@ -206,11 +208,14 @@ function rpsPart2() {
   } else if (result.innerText == "平手!") {
     rps.style.display = "none";
     rpsUserDraw.style.display = "block";
-    finalResultDraw.innerText = "平手 兩秒後自動跳轉...";
+    finalResultDraw.innerText = "平手!";
     setTimeout(() => {
       rpsUserDraw.style.display = "none";
       time.style.display = "block";
-    }, 2000);
+      timeDown();
+      clearPart1();
+      clearPart2();
+    }, 1000);
   }
 
   // 進攻畫面邏輯
@@ -220,8 +225,22 @@ function rpsPart2() {
     userWinChoice.src = iId + ".png";
     if (iId == "a") {
       finalResult.innerText = "恭喜 準備進入下一輪";
+      setTimeout(() => {
+        rpsUserWins.style.display = "none";
+        time.style.display = "block";
+        timeDown();
+        clearPart1();
+        clearPart2();
+      }, 1000);
     } else {
       finalResult.innerText = "sorry 出去再來";
+      setTimeout(() => {
+        rpsUserWins.style.display = "none";
+        time.style.display = "block";
+        timeDown();
+        clearPart1();
+        clearPart2();
+      }, 1000);
     }
     // 都出完後需停止點擊事件
     part2Btn.style.pointerEvents = "none";
@@ -235,53 +254,57 @@ function rpsPart2() {
     userLosesChoice.src = iLoseId + ".png";
     if (iLoseId == "d") {
       finalResultSecond.innerText = "恭喜 準備進入下一輪";
+      setTimeout(() => {
+        rpsUserLoses.style.display = "none";
+        time.style.display = "block";
+        timeDown();
+        clearPart1();
+        clearPart2();
+      }, 1000);
     } else {
       finalResultSecond.innerText = "sorry 出去再來";
+      setTimeout(() => {
+        rpsUserLoses.style.display = "none";
+        time.style.display = "block";
+        timeDown();
+        clearPart1();
+        clearPart2();
+      }, 1000);
     }
     // 都出完後需停止點擊事件
     part2BtnLoses.style.pointerEvents = "none";
   });
-
-  // clearPart2();
 }
 
 function clearPart1() {
+  firstTimerDown();
   // 如果不在第一關 則清除第一關資料
-  if (rps.style.display == "none") {
-    document.getElementById("r").src = "r.png";
-    document.getElementById("p").src = "p.png";
-    document.getElementById("s").src = "s.png";
-    document.getElementById("choice").src = "plz.png";
-    document.getElementById("my-choice").src = "plz.png";
-    document.getElementById("part1-btn").style.pointerEvents = "auto";
-    document.getElementById("result").innerHTML = "";
-    firstTimerDown();
-  }
+  document.getElementById("r").src = "r.png";
+  document.getElementById("p").src = "p.png";
+  document.getElementById("s").src = "s.png";
+  document.getElementById("choice").src = "plz.png";
+  document.getElementById("my-choice").src = "plz.png";
+  document.getElementById("part1-btn").style.pointerEvents = "auto";
+  document.getElementById("result").innerHTML = "請出拳";
 }
 
 function clearPart2() {
   // 如果不在第二關 則清除第二關資料
-  if (
-    rpsUserWins.style.display == "none" ||
-    rpsUserLoses.style.display == "none" ||
-    rpsUserDraw.style.display == "none"
-  ) {
-    // 進攻
-    part2ImgAttact.src = "/a.png";
-    part2ImgDefence.src = "/d.png";
-    userWinChoice.src = "plz.png";
-    document.getElementById("attack").src = "plz.png";
-    finalResult.innerHTML = "";
 
-    // 防守
+  // 進攻
+  part2ImgAttact.src = "/a.png";
+  part2ImgDefence.src = "/d.png";
+  userWinChoice.src = "plz.png";
+  document.getElementById("attack").src = "plz.png";
+  finalResult.innerHTML = "請選擇";
 
-    document.getElementById("defence").src = "plz.png";
-    userLosesChoice.src = "plz.png";
-    finalResultSecond.innerHTML = "";
+  // 防守
 
-    // 共用
+  document.getElementById("defence").src = "plz.png";
+  userLosesChoice.src = "plz.png";
+  finalResultSecond.innerHTML = "";
 
-    firstTimerDown();
-    part2Btn.style.pointerEvents = "auto";
-  }
+  // 共用
+  part2Btn.style.pointerEvents = "auto";
+  part2BtnLoses.style.pointerEvents = "auto";
 }

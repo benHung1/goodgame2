@@ -60,7 +60,10 @@ body {
 }
 
 #part1-btn,
-#part2-btn {
+#part2-btn,
+#user-draw-part1-btn,
+#user-loses-part1-btn,
+#user-wins-part1-btn {
   display: flex;
 }
 
