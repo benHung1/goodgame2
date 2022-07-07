@@ -12,32 +12,26 @@ var rpsUserWins = document.getElementById("rpsUserWins");
 var rpsUserLoses = document.getElementById("rpsUserLoses");
 var rpsUserDraw = document.getElementById("rpsUserDraw");
 var timer;
+var timeMinus;
 
-// function timeDown() {
-//   timer = 4;
-//   rps.style.display = "none";
+function timeDown() {
+  timer = 4;
+  rps.style.display = "none"; 
 
-//   var timeMinus = setInterval(() => {
-//     timer--;
-//     time.innerText = timer;
-//     if (
-//       timer <= 0 &&
-//       rpsUserWins.style.display == "none" &&
-//       rpsUserLoses.style.display == "none" &&
-//       rpsUserDraw.style.display == "none"
-//     ) {
-//       timer = 3;
-//       time.innerText = timer;
-//       clearInterval(timeMinus);
-//       time.style.display = "none";
-//       rps.style.display = "block";
-//     } else if (timer <= 0) {
-//       timer = 3;
-//       time.innerText = timer;
-//       clearInterval(timeMinus);
-//     }
-//   }, 1000);
-// }
+  clearInterval(timeMinus)
+  timeMinus = setInterval(function () {
+    timer--;
+    time.innerText = timer; 
+    if(timer <= 0 ) {
+      clearInterval(timeMinus);
+      timer = 4;
+      timer--;
+      time.innerText = timer;   
+      time.style.display = "none";
+      rps.style.display = "block"
+    } 
+  },1000)
+}
 
 // 第一關計時器
 
@@ -129,7 +123,25 @@ var finalResultSecond = document.getElementById("finalResultSecond");
 //   }, 1000);
 // }
 
+function firstTimerDown () {
+  firstTime = 30;
+  clearInterval(firstTimerMinus)
+  var firstTimerMinus = setInterval(()=> {
+      if (rps.style.display == "block" && isPaused) {
+        firstTimer.innerText = "出拳時間還有" + firstTime + "秒";
+        firstTime--      
+        if (firstTime <= -0 && result.innerText == "請出拳") {
+          clearInterval(firstTimerMinus)
+          result.innerText = "失敗 超時了"
+          part1Btn.style.pointerEvents = "none";
+        } 
+      } else {
+      }
+  }, 1000)
+}
+
 function rpsPart1() {
+  
   // 進畫面開始倒數
   firstTimerDown();
 
@@ -188,6 +200,9 @@ function rpsPart1() {
       }
       // 都出完後需停止點擊事件
       document.getElementById("part1-btn").style.pointerEvents = "none";
+      setTimeout(()=> {
+        rpsPart2();
+      },1000)  
     });
 }
 
@@ -202,9 +217,65 @@ function rpsPart2() {
   if (result.innerText == "贏了 底子可以") {
     rps.style.display = "none";
     rpsUserWins.style.display = "block";
+      // 進攻畫面邏輯
+      part2Btn.addEventListener("click", function (e) {
+        let iId = e.target.id;
+        document.getElementById("attack").src = "./shame.png";
+        userWinChoice.src = iId + ".png";
+        if (iId == "a") {
+          finalResult.innerText = "恭喜 準備進入下一輪";
+          setTimeout(() => {
+            rpsUserWins.style.display = "none";
+            time.style.display = "block";
+            timeDown();
+            clearPart1();
+            clearPart2();
+          }, 1500);
+        } else {
+          finalResult.innerText = "sorry 出去再來";
+          setTimeout(() => {
+            rpsUserWins.style.display = "none";
+            time.style.display = "block";
+            timeDown();
+            clearPart1();
+            clearPart2();
+          }, 1500);
+        }
+        // 都出完後需停止點擊事件
+        part2Btn.style.pointerEvents = "none";
+      });
+
   } else if (result.innerText == "輸了 底子不行") {
     rps.style.display = "none";
     rpsUserLoses.style.display = "block";
+    // 防守畫面邏輯
+
+    part2BtnLoses.addEventListener("click", function (e) {
+      let iLoseId = e.target.id;
+      document.getElementById("defence").src = "./hands.png";
+      userLosesChoice.src = iLoseId + ".png";
+      if (iLoseId == "d") {
+        finalResultSecond.innerText = "恭喜 準備進入下一輪";
+        setTimeout(() => {
+          rpsUserLoses.style.display = "none";
+          time.style.display = "block";
+          timeDown();
+          clearPart1();
+          clearPart2();
+        }, 1500);
+  } else {
+    finalResultSecond.innerText = "sorry 出去再來";
+    setTimeout(() => {
+      rpsUserLoses.style.display = "none";
+      time.style.display = "block";
+      timeDown();
+      clearPart1();
+      clearPart2();
+    }, 1500);
+  }
+  // 都出完後需停止點擊事件
+  part2BtnLoses.style.pointerEvents = "none";
+});
   } else if (result.innerText == "平手!") {
     rps.style.display = "none";
     rpsUserDraw.style.display = "block";
@@ -217,67 +288,12 @@ function rpsPart2() {
       clearPart2();
     }, 1000);
   }
-
-  // 進攻畫面邏輯
-  part2Btn.addEventListener("click", function (e) {
-    let iId = e.target.id;
-    document.getElementById("attack").src = "./shame.png";
-    userWinChoice.src = iId + ".png";
-    if (iId == "a") {
-      finalResult.innerText = "恭喜 準備進入下一輪";
-      setTimeout(() => {
-        rpsUserWins.style.display = "none";
-        time.style.display = "block";
-        timeDown();
-        clearPart1();
-        clearPart2();
-      }, 1000);
-    } else {
-      finalResult.innerText = "sorry 出去再來";
-      setTimeout(() => {
-        rpsUserWins.style.display = "none";
-        time.style.display = "block";
-        timeDown();
-        clearPart1();
-        clearPart2();
-      }, 1000);
-    }
-    // 都出完後需停止點擊事件
-    part2Btn.style.pointerEvents = "none";
-  });
-
-  // 防守畫面邏輯
-
-  part2BtnLoses.addEventListener("click", function (e) {
-    let iLoseId = e.target.id;
-    document.getElementById("defence").src = "./hands.png";
-    userLosesChoice.src = iLoseId + ".png";
-    if (iLoseId == "d") {
-      finalResultSecond.innerText = "恭喜 準備進入下一輪";
-      setTimeout(() => {
-        rpsUserLoses.style.display = "none";
-        time.style.display = "block";
-        timeDown();
-        clearPart1();
-        clearPart2();
-      }, 1000);
-    } else {
-      finalResultSecond.innerText = "sorry 出去再來";
-      setTimeout(() => {
-        rpsUserLoses.style.display = "none";
-        time.style.display = "block";
-        timeDown();
-        clearPart1();
-        clearPart2();
-      }, 1000);
-    }
-    // 都出完後需停止點擊事件
-    part2BtnLoses.style.pointerEvents = "none";
-  });
 }
 
+
+  
+
 function clearPart1() {
-  firstTimerDown();
   // 如果不在第一關 則清除第一關資料
   document.getElementById("r").src = "r.png";
   document.getElementById("p").src = "p.png";
@@ -289,6 +305,8 @@ function clearPart1() {
 }
 
 function clearPart2() {
+
+
   // 如果不在第二關 則清除第二關資料
 
   // 進攻
@@ -302,7 +320,7 @@ function clearPart2() {
 
   document.getElementById("defence").src = "plz.png";
   userLosesChoice.src = "plz.png";
-  finalResultSecond.innerHTML = "";
+  finalResultSecond.innerHTML = "請選擇";
 
   // 共用
   part2Btn.style.pointerEvents = "auto";
