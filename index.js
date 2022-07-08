@@ -1,6 +1,5 @@
 window.onload = function () {
   timeDown();
-
   rpsPart1();
 };
 
@@ -13,6 +12,10 @@ var rpsUserLoses = document.getElementById("rpsUserLoses");
 var rpsUserDraw = document.getElementById("rpsUserDraw");
 var timer;
 var timeMinus;
+var round = document.getElementById("round");
+var count = 0;
+var score = 0;
+var myScore = document.getElementById("myScore");
 
 function timeDown() {
   timer = 4;
@@ -57,8 +60,86 @@ var finalResultSecond = document.getElementById("finalResultSecond");
 
 var secondTime;
 
+function changeTime() {
+  if (count <= 3) {
+    firstTime = 15;
+    if (
+      finalResult.innerText == "恭喜 準備進入下一輪" ||
+      finalResultSecond.innerText == "恭喜 準備進入下一輪"
+    ) {
+      count += 1;
+      score += 10;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else if (
+      finalResult.innerText == "平手!" ||
+      finalResultDraw.innerText == "平手!"
+    ) {
+      count = count;
+      score = score;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else {
+      count = 1;
+      score = 0;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    }
+  } else if (count > 3 && count <= 6) {
+    firstTime = 6;
+    if (
+      finalResult.innerText == "恭喜 準備進入下一輪" ||
+      finalResultSecond.innerText == "恭喜 準備進入下一輪"
+    ) {
+      count += 1;
+      score += 20;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else if (
+      finalResult.innerText == "平手!" ||
+      finalResultDraw.innerText == "平手!"
+    ) {
+      count = count;
+      score = score;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else {
+      count = 1;
+      score = 0;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    }
+  } else if (count > 6 && count <= 9) {
+    firstTime = 3;
+    if (
+      finalResult.innerText == "恭喜 準備進入下一輪" ||
+      finalResultSecond.innerText == "恭喜 準備進入下一輪"
+    ) {
+      count += 1;
+      score += 30;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else if (
+      finalResult.innerText == "平手!" ||
+      finalResultDraw.innerText == "平手!"
+    ) {
+      count = count;
+      score = score;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else {
+      count = 1;
+      score = 0;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    }
+  } else {
+    alert("恭喜你挑戰成功 分數為180分");
+  }
+}
+
 function firstTimerDown() {
-  firstTime = 15;
+  changeTime();
   clearInterval(firstTimerMinus);
   var firstTimerMinus = setInterval(() => {
     if (firstTime >= 0 && time.style.display == "none") {
@@ -88,6 +169,10 @@ function firstTimerDown() {
       }
       if (firstTime <= -1 && result.innerText == "請出拳") {
         result.innerText = "失敗 超時了";
+        firstTimer.style.display = "none";
+        count = 0;
+        score = 0;
+
         clearInterval(firstTimerMinus);
         clearTimeout(secondTime);
         secondTime = setTimeout(() => {
@@ -118,6 +203,9 @@ function firstTimerDown() {
       if (firstTime <= -1 && finalResult.innerText == "請選擇") {
         finalResult.innerText = "失敗 超時了";
         finalResultSecond.innerText = "失敗 超時了";
+        firstTimer.style.display = "none";
+        count = 0;
+        score = 0;
         clearInterval(firstTimerMinus);
         clearTimeout(secondTime);
         secondTime = setTimeout(() => {
@@ -277,7 +365,6 @@ function rpsPart2() {
       if (iLoseId == "d") {
         finalResultSecond.innerText = "恭喜 準備進入下一輪";
         firstTimer.style.display = "none";
-
         clearTimeout(secondTime);
         secondTime = setTimeout(() => {
           rpsUserLoses.style.display = "none";
@@ -306,6 +393,7 @@ function rpsPart2() {
     rps.style.display = "none";
     rpsUserDraw.style.display = "block";
     finalResultDraw.innerText = "平手!";
+    firstTimer.style.display = "none";
     clearTimeout(secondTime);
     secondTime = setTimeout(() => {
       rpsUserDraw.style.display = "none";

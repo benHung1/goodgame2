@@ -10,10 +10,13 @@
   <body>
     <!-- 倒數 -->
     <div id="timeBox"></div>
-    <!-- 猜拳 -->
+    <!-- 右下角時間 -->
     <h1 id="timer"></h1>
+    <!-- 猜拳 -->
     <div id="rpsContainer">
       <section id="rpsWrapper">
+        <h1 id="round">您好我是第一回合</h1>
+        <h1 id="myScore">您好我的分數是 0</h1>
         <img id="choice" draggable="false" src="./plz.png" />
         <br />
         <h1>殭屍的殭屍的殭屍猜</h1>
@@ -65,7 +68,6 @@
             <img id="d" src="./d.png" draggable="false" class="d" />
           </div>
         </div>
-        <h1 id="myScore">0</h1>
       </section>
       <!-- 猜拳失敗後到這裡 -->
       <section id="rpsUserLoses" style="display: none">
@@ -89,7 +91,6 @@
             <img id="d" src="./d.png" draggable="false" />
           </div>
         </div>
-        <h1 id="loseMyScore">0</h1>
       </section>
       <!-- 猜拳平手後到這裡 -->
       <section id="rpsUserDraw" style="display: none">
