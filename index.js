@@ -308,80 +308,77 @@ function rpsPart1() {
         rpsPart2();
       }, 1000);
     });
+
+    //  鍵盤操作
+
+      document.addEventListener("keydown", function changekeyDown(e) {
+        let keyCode = e.key;
+        console.log(keyCode);
+        isPaused = false;
+      
+        if (keyCode === "r" || keyCode === "p" || keyCode === "s" ) {
+          document.getElementById("my-choice").src = keyCode + ".png";
+          document.removeEventListener("keydown", changekeyDown);
+      
+          // 都出完後需停止點擊事件
+      
+          clearTimeout(secondTime);
+          secondTime = setTimeout(() => {
+            rpsPart2();
+          }, 1000);
+        } else {
+          
+          // alert("請不要亂按 石頭 = r  剪刀 = s 布 = p");
+        }
+      
+        // 電腦出拳
+      
+        if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
+          opponent = choices[Math.floor(Math.random() * 3)];
+          document.getElementById("choice").src = opponent + ".png";
+        }
+      
+        // 判斷使用者出了什麼
+      
+        if (keyCode === "r") {
+          document.getElementById("r").src = "./rock.png";
+      
+          // 使用者出拳
+      
+          if (keyCode === "r" && opponent === "r") {
+            result.innerText = "平手!";
+          } else if (keyCode === "r" && opponent === "p") {
+            result.innerText = "輸了 底子不行";
+          } else {
+            result.innerText = "贏了 底子可以";
+          }
+        } else if (keyCode === "p") {
+          document.getElementById("p").src = "./cloth.png";
+      
+          // 使用者出布
+      
+          if (keyCode === "p" && opponent === "p") {
+            result.innerText = "平手!";
+          } else if (keyCode === "p" && opponent === "s") {
+            result.innerText = "輸了 底子不行";
+          } else {
+            result.innerText = "贏了 底子可以";
+          }
+        } else if (keyCode === "s") {
+          document.getElementById("s").src = "./shears.png";
+      
+          // 使用者出剪刀
+      
+          if (keyCode === "s" && opponent === "s") {
+            result.innerText = "平手!";
+          } else if (keyCode === "s" && opponent === "r") {
+            result.innerText = "輸了 底子不行";
+          } else {
+            result.innerText = "贏了 底子可以";
+          }
+        }
+      });
 }
-
-//  鍵盤操作
-
-
-document.addEventListener("keydown", function changekeyDown(e) {
-  let keyCode = e.key;
-  isPaused = false;
-
-  if (keyCode === "r" || keyCode === "p" || keyCode === "s" ) {
-    document.getElementById("my-choice").src = keyCode + ".png";
-    document.removeEventListener("keydown", changekeyDown);
-
-    // 都出完後需停止點擊事件
-
-
-    clearTimeout(secondTime);
-    secondTime = setTimeout(() => {
-      rpsPart2();
-    }, 1000);
-  } else {
-    // alert("請不要亂按 石頭 = r  剪刀 = s 布 = p");
-  }
-
-  // 電腦出拳
-
-  if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
-    opponent = choices[Math.floor(Math.random() * 3)];
-    document.getElementById("choice").src = opponent + ".png";
-  }
-
-  // 判斷使用者出了什麼
-
-  if (keyCode === "r") {
-    document.getElementById("r").src = "./rock.png";
-
-    // 使用者出拳
-
-    if (keyCode === "r" && opponent === "r") {
-      result.innerText = "平手!";
-    } else if (keyCode === "r" && opponent === "p") {
-      result.innerText = "輸了 底子不行";
-    } else {
-      result.innerText = "贏了 底子可以";
-    }
-  } else if (keyCode === "p") {
-    document.getElementById("p").src = "./cloth.png";
-
-    // 使用者出布
-
-    if (keyCode === "p" && opponent === "p") {
-      result.innerText = "平手!";
-    } else if (keyCode === "p" && opponent === "s") {
-      result.innerText = "輸了 底子不行";
-    } else {
-      result.innerText = "贏了 底子可以";
-    }
-  } else if (keyCode === "s") {
-    document.getElementById("s").src = "./shears.png";
-
-    // 使用者出剪刀
-
-    if (keyCode === "s" && opponent === "s") {
-      result.innerText = "平手!";
-    } else if (keyCode === "s" && opponent === "r") {
-      result.innerText = "輸了 底子不行";
-    } else {
-      result.innerText = "贏了 底子可以";
-    }
-  }
-});
-
-
-
 
 
 var userWinChoice = document.getElementById("userWinChoice");
