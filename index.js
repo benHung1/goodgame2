@@ -61,7 +61,7 @@ var finalResultSecond = document.getElementById("finalResultSecond");
 var secondTime;
 
 function changeTime() {
-  if (count <= 3) {
+  if (score < 30) {
     firstTime = 15;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -85,7 +85,7 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-  } else if (count > 3 && count <= 6) {
+  } else if (score < 90) {
     firstTime = 6;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -109,7 +109,7 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-  } else if (count > 6 && count < 9) {
+  } else if (score < 150) {
     firstTime = 3;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -133,32 +133,8 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-    // 這裡要多一個判斷 如果少了這個 最後一輪猜平手 會直接變成滿分
-  } else if (score < 180) {
-    firstTime = 3;
-    if (
-      finalResult.innerText == "恭喜 準備進入下一輪" ||
-      finalResultSecond.innerText == "恭喜 準備進入下一輪"
-    ) {
-      count += 1;
-      score += 30;
-      round.innerText = `您好我是第  ${count} 回合 `;
-      myScore.innerText = `您好我的分數是 ${score}`;
-    } else if (
-      finalResult.innerText == "平手!" ||
-      finalResultDraw.innerText == "平手!"
-    ) {
-      count = count;
-      score = score;
-      round.innerText = `您好我是第  ${count} 回合 `;
-      myScore.innerText = `您好我的分數是 ${score}`;
-    } else {
-      count = 1;
-      score = 0;
-      round.innerText = `您好我是第  ${count} 回合 `;
-      myScore.innerText = `您好我的分數是 ${score}`;
-    }
-  } else {
+  }  
+  else {
     firstTime = 15;
     count = 1;
     score = 0;
@@ -336,13 +312,17 @@ function rpsPart1() {
 
 //  鍵盤操作
 
+
 document.addEventListener("keydown", function changekeyDown(e) {
   let keyCode = e.key;
+  isPaused = false;
 
-  if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
+  if (keyCode === "r" || keyCode === "p" || keyCode === "s" ) {
     document.getElementById("my-choice").src = keyCode + ".png";
     document.removeEventListener("keydown", changekeyDown);
+
     // 都出完後需停止點擊事件
+
 
     clearTimeout(secondTime);
     secondTime = setTimeout(() => {
@@ -400,12 +380,17 @@ document.addEventListener("keydown", function changekeyDown(e) {
   }
 });
 
+
+
+
+
 var userWinChoice = document.getElementById("userWinChoice");
 var userLosesChoice = document.getElementById("userLosesChoice");
 var Timer = document.getElementById("Timer");
 var finalResultDraw = document.getElementById("finalResultDraw");
 
 function rpsPart2() {
+
   // 鍵盤操作
 
   document.addEventListener("keypress", function changekeyDownPart2(e) {
@@ -469,6 +454,8 @@ function rpsPart2() {
       document.removeEventListener("keypress", changekeyDownPart2);
     }
   });
+
+
 
   // 判斷猜拳輸贏後 該顯示哪個畫面
 
@@ -573,7 +560,6 @@ function clearPart1() {
   document.getElementById("result").innerHTML = "請出拳";
   document.addEventListener("keydown", function changekeyDown(e) {
     let keyCode = e.key;
-    console.log(keyCode);
 
     if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
       document.getElementById("my-choice").src = keyCode + ".png";
