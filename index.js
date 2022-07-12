@@ -61,7 +61,7 @@ var finalResultSecond = document.getElementById("finalResultSecond");
 var secondTime;
 
 function changeTime() {
-  if (count <= 3) {
+  if (score < 30) {
     firstTime = 15;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -85,7 +85,7 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-  } else if (count > 3 && count <= 6) {
+  } else if (score < 90) {
     firstTime = 6;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -109,32 +109,7 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-  } else if (count > 6 && count < 9) {
-    firstTime = 3;
-    if (
-      finalResult.innerText == "恭喜 準備進入下一輪" ||
-      finalResultSecond.innerText == "恭喜 準備進入下一輪"
-    ) {
-      count += 1;
-      score += 30;
-      round.innerText = `您好我是第  ${count} 回合 `;
-      myScore.innerText = `您好我的分數是 ${score}`;
-    } else if (
-      finalResult.innerText == "平手!" ||
-      finalResultDraw.innerText == "平手!"
-    ) {
-      count = count;
-      score = score;
-      round.innerText = `您好我是第  ${count} 回合 `;
-      myScore.innerText = `您好我的分數是 ${score}`;
-    } else {
-      count = 1;
-      score = 0;
-      round.innerText = `您好我是第  ${count} 回合 `;
-      myScore.innerText = `您好我的分數是 ${score}`;
-    }
-    // 這裡要多一個判斷 如果少了這個 最後一輪猜平手 會直接變成滿分
-  } else if (score < 180) {
+  } else if (score < 150) {
     firstTime = 3;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -338,64 +313,66 @@ function rpsPart1() {
 
 document.addEventListener("keydown", function changekeyDown(e) {
   let keyCode = e.key;
+  console.log(keyCode);
 
-  if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
-    document.getElementById("my-choice").src = keyCode + ".png";
-    document.removeEventListener("keydown", changekeyDown);
-    // 都出完後需停止點擊事件
+  if (rps.style.display === "block" && time.style.display === "none") {
+    if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
+      document.getElementById("my-choice").src = keyCode + ".png";
+      document.removeEventListener("keydown", changekeyDown);
 
-    clearTimeout(secondTime);
-    secondTime = setTimeout(() => {
-      rpsPart2();
-    }, 1000);
-  } else {
-    // alert("請不要亂按 石頭 = r  剪刀 = s 布 = p");
-  }
+      // 都出完後需停止點擊事件
 
-  // 電腦出拳
+      // 電腦出拳
 
-  if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
-    opponent = choices[Math.floor(Math.random() * 3)];
-    document.getElementById("choice").src = opponent + ".png";
-  }
+      opponent = choices[Math.floor(Math.random() * 3)];
+      document.getElementById("choice").src = opponent + ".png";
 
-  // 判斷使用者出了什麼
-
-  if (keyCode === "r") {
-    document.getElementById("r").src = "./rock.png";
-
-    // 使用者出拳
-
-    if (keyCode === "r" && opponent === "r") {
-      result.innerText = "平手!";
-    } else if (keyCode === "r" && opponent === "p") {
-      result.innerText = "輸了 底子不行";
+      clearTimeout(secondTime);
+      secondTime = setTimeout(() => {
+        rpsPart2();
+      }, 1000);
     } else {
-      result.innerText = "贏了 底子可以";
+      // alert("請不要亂按 石頭 = r  剪刀 = s 布 = p");
     }
-  } else if (keyCode === "p") {
-    document.getElementById("p").src = "./cloth.png";
 
-    // 使用者出布
+    // 判斷使用者出了什麼
 
-    if (keyCode === "p" && opponent === "p") {
-      result.innerText = "平手!";
-    } else if (keyCode === "p" && opponent === "s") {
-      result.innerText = "輸了 底子不行";
-    } else {
-      result.innerText = "贏了 底子可以";
-    }
-  } else if (keyCode === "s") {
-    document.getElementById("s").src = "./shears.png";
+    if (keyCode === "r") {
+      document.getElementById("r").src = "./rock.png";
 
-    // 使用者出剪刀
+      // 使用者出拳
 
-    if (keyCode === "s" && opponent === "s") {
-      result.innerText = "平手!";
-    } else if (keyCode === "s" && opponent === "r") {
-      result.innerText = "輸了 底子不行";
-    } else {
-      result.innerText = "贏了 底子可以";
+      if (keyCode === "r" && opponent === "r") {
+        result.innerText = "平手!";
+      } else if (keyCode === "r" && opponent === "p") {
+        result.innerText = "輸了 底子不行";
+      } else {
+        result.innerText = "贏了 底子可以";
+      }
+    } else if (keyCode === "p") {
+      document.getElementById("p").src = "./cloth.png";
+
+      // 使用者出布
+
+      if (keyCode === "p" && opponent === "p") {
+        result.innerText = "平手!";
+      } else if (keyCode === "p" && opponent === "s") {
+        result.innerText = "輸了 底子不行";
+      } else {
+        result.innerText = "贏了 底子可以";
+      }
+    } else if (keyCode === "s") {
+      document.getElementById("s").src = "./shears.png";
+
+      // 使用者出剪刀
+
+      if (keyCode === "s" && opponent === "s") {
+        result.innerText = "平手!";
+      } else if (keyCode === "s" && opponent === "r") {
+        result.innerText = "輸了 底子不行";
+      } else {
+        result.innerText = "贏了 底子可以";
+      }
     }
   }
 });
@@ -573,67 +550,67 @@ function clearPart1() {
   document.getElementById("result").innerHTML = "請出拳";
   document.addEventListener("keydown", function changekeyDown(e) {
     let keyCode = e.key;
-    console.log(keyCode);
 
-    if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
-      document.getElementById("my-choice").src = keyCode + ".png";
-      document.removeEventListener("keydown", changekeyDown);
-    } else {
-      // alert("請不要亂按 石頭 = r  剪刀 = s 布 = p");
-    }
+    if (rps.style.display === "block" && time.style.display === "none") {
+      if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
+        document.getElementById("my-choice").src = keyCode + ".png";
+        document.removeEventListener("keydown", changekeyDown);
 
-    // 電腦出拳
+        // 都出完後需停止點擊事件
 
-    if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
-      opponent = choices[Math.floor(Math.random() * 3)];
-      document.getElementById("choice").src = opponent + ".png";
-    }
+        // 電腦出拳
 
-    // 判斷使用者出了什麼
+        opponent = choices[Math.floor(Math.random() * 3)];
+        document.getElementById("choice").src = opponent + ".png";
 
-    if (keyCode === "r") {
-      document.getElementById("r").src = "./rock.png";
-
-      // 使用者出拳
-
-      if (keyCode === "r" && opponent === "r") {
-        result.innerText = "平手!";
-      } else if (keyCode === "r" && opponent === "p") {
-        result.innerText = "輸了 底子不行";
+        clearTimeout(secondTime);
+        secondTime = setTimeout(() => {
+          rpsPart2();
+        }, 1000);
       } else {
-        result.innerText = "贏了 底子可以";
+        // alert("請不要亂按 石頭 = r  剪刀 = s 布 = p");
       }
-    } else if (keyCode === "p") {
-      document.getElementById("p").src = "./cloth.png";
 
-      // 使用者出布
+      // 判斷使用者出了什麼
 
-      if (keyCode === "p" && opponent === "p") {
-        result.innerText = "平手!";
-      } else if (keyCode === "p" && opponent === "s") {
-        result.innerText = "輸了 底子不行";
-      } else {
-        result.innerText = "贏了 底子可以";
-      }
-    } else if (keyCode === "s") {
-      document.getElementById("s").src = "./shears.png";
+      if (keyCode === "r") {
+        document.getElementById("r").src = "./rock.png";
 
-      // 使用者出剪刀
+        // 使用者出拳
 
-      if (keyCode === "s" && opponent === "s") {
-        result.innerText = "平手!";
-      } else if (keyCode === "s" && opponent === "r") {
-        result.innerText = "輸了 底子不行";
-      } else {
-        result.innerText = "贏了 底子可以";
+        if (keyCode === "r" && opponent === "r") {
+          result.innerText = "平手!";
+        } else if (keyCode === "r" && opponent === "p") {
+          result.innerText = "輸了 底子不行";
+        } else {
+          result.innerText = "贏了 底子可以";
+        }
+      } else if (keyCode === "p") {
+        document.getElementById("p").src = "./cloth.png";
+
+        // 使用者出布
+
+        if (keyCode === "p" && opponent === "p") {
+          result.innerText = "平手!";
+        } else if (keyCode === "p" && opponent === "s") {
+          result.innerText = "輸了 底子不行";
+        } else {
+          result.innerText = "贏了 底子可以";
+        }
+      } else if (keyCode === "s") {
+        document.getElementById("s").src = "./shears.png";
+
+        // 使用者出剪刀
+
+        if (keyCode === "s" && opponent === "s") {
+          result.innerText = "平手!";
+        } else if (keyCode === "s" && opponent === "r") {
+          result.innerText = "輸了 底子不行";
+        } else {
+          result.innerText = "贏了 底子可以";
+        }
       }
     }
-    // 都出完後需停止點擊事件
-
-    clearTimeout(secondTime);
-    secondTime = setTimeout(() => {
-      rpsPart2();
-    }, 1000);
   });
 }
 
