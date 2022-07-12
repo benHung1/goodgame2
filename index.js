@@ -13,7 +13,7 @@ var rpsUserDraw = document.getElementById("rpsUserDraw");
 var timer;
 var timeMinus;
 var round = document.getElementById("round");
-var count = 0;
+var count = 1;
 var score = 0;
 var myScore = document.getElementById("myScore");
 
@@ -63,6 +63,7 @@ var secondTime;
 function changeTime() {
   if (score < 30) {
     firstTime = 15;
+    console.log("回合:", count, "分數:", score);
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
       finalResultSecond.innerText == "恭喜 準備進入下一輪"
@@ -87,6 +88,8 @@ function changeTime() {
     }
   } else if (score < 90) {
     firstTime = 6;
+    console.log("回合:", count, "分數:", score);
+
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
       finalResultSecond.innerText == "恭喜 準備進入下一輪"
@@ -111,6 +114,34 @@ function changeTime() {
     }
   } else if (score < 150) {
     firstTime = 3;
+    console.log("回合:", count, "分數:", score);
+
+    if (
+      finalResult.innerText == "恭喜 準備進入下一輪" ||
+      finalResultSecond.innerText == "恭喜 準備進入下一輪"
+    ) {
+      count += 1;
+      score += 30;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else if (
+      finalResult.innerText == "平手!" ||
+      finalResultDraw.innerText == "平手!"
+    ) {
+      count = count;
+      score = score;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    } else {
+      count = 1;
+      score = 0;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    }
+  } else if (score <= 150 && finalResultDraw.innerText == "平手!") {
+    firstTime = 3;
+    console.log("回合:", count, "分數:", score);
+
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
       finalResultSecond.innerText == "恭喜 準備進入下一輪"
@@ -134,12 +165,13 @@ function changeTime() {
       myScore.innerText = `您好我的分數是 ${score}`;
     }
   } else {
+    console.log("回合:", count, "分數:", score);
     firstTime = 15;
     count = 1;
     score = 0;
     round.innerText = `您好我是第  ${count} 回合 `;
     myScore.innerText = `您好我的分數是 ${score}`;
-    alert("恭喜你挑戰成功 分數為180分");
+    alert("恭喜你挑戰成功");
   }
 }
 
@@ -174,8 +206,10 @@ function firstTimerDown() {
       if (firstTime <= -1 && result.innerText == "請出拳") {
         result.innerText = "失敗 超時了";
         firstTimer.style.display = "none";
-        count = 0;
+        count = 1;
         score = 0;
+        round.innerText = `您好我是第  ${count} 回合 `;
+        myScore.innerText = `您好我的分數是 ${score}`;
 
         clearInterval(firstTimerMinus);
         clearTimeout(secondTime);
@@ -204,13 +238,17 @@ function firstTimerDown() {
         clearInterval(firstTimerMinus);
       });
 
-      document.addEventListener("keydown", function () {
+      document.addEventListener("keydown", function (e) {
         if (
           (rps.style.display == "none" &&
-            rpsUserDraw.style.display == "block") ||
+            rpsUserDraw.style.display == "block" &&
+            (e.key == "d" || e.key == "a")) ||
           (rps.style.display == "none" &&
-            rpsUserLoses.style.display == "block") ||
-          (rps.style.display == "none" && rpsUserWins.style.display == "block")
+            rpsUserLoses.style.display == "block" &&
+            (e.key == "d" || e.key == "a")) ||
+          (rps.style.display == "none" &&
+            rpsUserWins.style.display == "block" &&
+            (e.key == "d" || e.key == "a"))
         ) {
           clearInterval(firstTimerMinus);
         }
@@ -220,8 +258,11 @@ function firstTimerDown() {
         finalResult.innerText = "失敗 超時了";
         finalResultSecond.innerText = "失敗 超時了";
         firstTimer.style.display = "none";
-        count = 0;
+        count = 1;
         score = 0;
+        round.innerText = `您好我是第  ${count} 回合 `;
+        myScore.innerText = `您好我的分數是 ${score}`;
+
         clearInterval(firstTimerMinus);
         clearTimeout(secondTime);
         secondTime = setTimeout(() => {
@@ -313,7 +354,6 @@ function rpsPart1() {
 
 document.addEventListener("keydown", function changekeyDown(e) {
   let keyCode = e.key;
-  console.log(keyCode);
 
   if (rps.style.display === "block" && time.style.display === "none") {
     if (keyCode === "r" || keyCode === "p" || keyCode === "s") {
@@ -419,6 +459,7 @@ function rpsPart2() {
         clearPart2();
       }, 1000);
     }
+
     // 以上為勝利時，以下為失敗時
     else if (rpsUserLoses.style.display == "block" && keyCodePart2 == "d") {
       finalResultSecond.innerText = "恭喜 準備進入下一輪";
