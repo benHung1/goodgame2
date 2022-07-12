@@ -8,6 +8,7 @@
   </head>
   <body>
     <input type="text" id="userNameGet" />
+    <h1 id="score">0</h1>
     <button id="btn" onclick="getUserId()">看懂了 開始</button>
     <script>
       function getUserId() {
@@ -19,9 +20,28 @@
         }
       }
 
-      fetch("https://fakestoreapi.com/products").then((data) => {
-        console.log(data);
-      });
+      fetch("https://event.setn.com/api/ghost2022/score/520", {
+        method: "POST",
+      })
+        .then((data) => {
+          return data.json();
+        })
+        .then((finaldata) => {
+          console.log(finaldata);
+          document.getElementById("score").innerHTML = finaldata.score;
+        });
+
+      // fetch("https://event.setn.com/api/ghost2022/score/123")
+      //   .then(function (res) {
+      //     return res.json();
+      //   })
+      //   .then(function (myRes) {
+      //     console.log(myRes);
+      //   });
+
+      // fetch("https://event.setn.com/api/ghost2022/score/123").then((data) => {
+      //   console.log(data);
+      // });
     </script>
   </body>
 </html> -->
