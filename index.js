@@ -61,7 +61,7 @@ var finalResultSecond = document.getElementById("finalResultSecond");
 var secondTime;
 
 function changeTime() {
-  if (score < 30) {
+  if (count <= 3) {
     firstTime = 15;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -86,7 +86,7 @@ function changeTime() {
       myScore.innerText = `您好我的分數是 ${score}`;
     }
     console.log("回合:", count, "分數:", score);
-  } else if (score < 90) {
+  } else if (count <= 6) {
     firstTime = 6;
 
     if (
@@ -112,7 +112,7 @@ function changeTime() {
       myScore.innerText = `您好我的分數是 ${score}`;
     }
     console.log("回合:", count, "分數:", score);
-  } else if (score < 180) {
+  } else if (count < 9) {
     firstTime = 3;
     if (
       finalResult.innerText == "恭喜 準備進入下一輪" ||
@@ -137,12 +137,30 @@ function changeTime() {
       myScore.innerText = `您好我的分數是 ${score}`;
     }
     console.log("回合:", count, "分數:", score);
-  } else {
-    firstTime = 15;
+  } 
+  else {
+
+    if ( score == 150 && finalResult.innerText == "平手!" ||
+    finalResultDraw.innerText == "平手!"
+    ) {
+      firstTime = 3;
+      count = count;
+      score = score;
+      round.innerText = `您好我是第  ${count} 回合 `;
+      myScore.innerText = `您好我的分數是 ${score}`;
+    }
+
+    count +=1;
+    score += 30;
+    console.log("回合:", count, "分數:", score);
+    alert('挑戰成功')
+
+
     count = 1;
     score = 0;
     round.innerText = `您好我是第  ${count} 回合 `;
     myScore.innerText = `您好我的分數是 ${score}`;
+
   }
 }
 
