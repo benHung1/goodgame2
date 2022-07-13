@@ -85,7 +85,6 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-    console.log("回合:", count, "分數:", score);
   } else if (count <= 6) {
     firstTime = 6;
 
@@ -111,7 +110,6 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-    console.log("回合:", count, "分數:", score);
   } else if (count < 9) {
     firstTime = 3;
     if (
@@ -136,7 +134,6 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
     }
-    console.log("回合:", count, "分數:", score);
   } else {
     if (
       score == 150 &&
@@ -145,10 +142,8 @@ function changeTime() {
     ) {
       count += 1;
       score += 30;
-      console.log("回合:", count, "分數:", score);
       alert("挑戰成功");
     } else if (score == 150 && finalResultDraw.innerText == "平手!") {
-      console.log("這裡是最後一輪平手了");
       firstTime = 3;
       count = count;
       score = score;
@@ -289,7 +284,7 @@ function rpsPart1() {
 
       //  電腦出拳
 
-      opponent = "r";
+      opponent = choices[Math.floor(Math.random() * 3)];
       document.getElementById("choice").src = opponent + ".png";
 
       // 判斷使用者出了什麼
@@ -351,8 +346,7 @@ function rpsPart1() {
         // 都出完後需停止點擊事件
 
         // 電腦出拳
-
-        opponent = "r";
+        opponent = choices[Math.floor(Math.random() * 3)];
         document.getElementById("choice").src = opponent + ".png";
 
         clearTimeout(secondTime);
@@ -590,7 +584,7 @@ function clearPart1() {
 
         // 電腦出拳
 
-        opponent = "r";
+        opponent = choices[Math.floor(Math.random() * 3)];
         document.getElementById("choice").src = opponent + ".png";
 
         clearTimeout(secondTime);
