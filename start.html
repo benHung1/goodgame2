@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,40 +8,49 @@
   </head>
   <body>
     <input type="text" id="userNameGet" />
-    <h1 id="score">0</h1>
-    <button id="btn" onclick="getUserId()">看懂了 開始</button>
-    <script>
-      function getUserId() {
-        const userName = document.getElementById("userNameGet").value;
+    <button id="btn" onclick="getUserNumber()">請輸入活動編號</button>
+    <h1 id="userNumber">who r u</h1>
 
-        if (!userName) {
+    <button id="start" onclick="getUserId()">看懂了快點讓我開始</button>
+
+    <script>
+      function getUserNumber() {
+        const UserNumber = document.getElementById("userNameGet").value;
+
+        if (!UserNumber) {
           alert("請不要空白");
           return;
         }
+        fetch(`https://event.setn.com/api/ghost2022/signin/${UserNumber}`, {
+          method: "POST",
+        })
+          .then((data) => {
+            return data.json();
+          })
+          .then((finaldata) => {
+            console.log(finaldata);
+            document.getElementById("userNumber").innerHTML = UserNumber;
+          })
+          .catch((error) => {
+            alert("請輸入正確編號OK?");
+          });
       }
 
-      fetch("https://event.setn.com/api/ghost2022/score/520", {
-        method: "POST",
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((finaldata) => {
-          console.log(finaldata);
-          document.getElementById("score").innerHTML = finaldata.score;
-        });
+      function getUserId() {
+        const userId = document.getElementById("start");
 
-      // fetch("https://event.setn.com/api/ghost2022/score/123")
-      //   .then(function (res) {
-      //     return res.json();
-      //   })
-      //   .then(function (myRes) {
-      //     console.log(myRes);
-      //   });
+        if (!userId) {
+          alert("請不要空白");
+        }
 
-      // fetch("https://event.setn.com/api/ghost2022/score/123").then((data) => {
-      //   console.log(data);
-      // });
+        fetch(`https://event.setn.com/api/ghost2022/play/0101`)
+          .then((data) => {
+            return data.json();
+          })
+          .then((finalData) => {
+            console.log(finalData);
+          });
+      }
     </script>
   </body>
-</html> -->
+</html>

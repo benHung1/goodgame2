@@ -148,7 +148,6 @@ function changeTime() {
       console.log("回合:", count, "分數:", score);
       alert("挑戰成功");
     } else if (score == 150 && finalResultDraw.innerText == "平手!") {
-      console.log("這裡是最後一輪平手了");
       firstTime = 3;
       count = count;
       score = score;
