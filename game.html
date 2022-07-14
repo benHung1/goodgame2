@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>hello this is start page</h1>
+    <button id="start" onclick="getUserId()" href="game.html" target="_blank">
+      看懂了快點讓我開始
+    </button>
+      
+    </button>
+
+    <script>
+
+
+      function getUserId() {
+
+
+        UserNumber = localStorage.getItem('UserNumber');
+
+
+
+        fetch(`https://event.setn.com/api/ghost2022/play/${UserNumber}`)
+          .then((data) => {
+            return data.json();
+          })
+          .then((finalData) => {
+            console.log(finalData);
+            userId = finalData.id;
+            localStorage.setItem('userId', userId);
+          })
+          .catch(() => {
+            alert("請不要搞OK?");
+          });
+
+      }
+    </script>
+  </body>
+</html>

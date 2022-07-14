@@ -46,9 +46,6 @@ body {
   visibility: hidden;
 } */
 
-#rpsWrapper {
-}
-
 #choices,
 #second,
 #third,
@@ -84,4 +81,22 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.title h1 {
+  padding: 0 0 0 15px;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper p {
+  margin: 0 10px 0 0;
 }

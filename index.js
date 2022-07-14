@@ -3,6 +3,35 @@ window.onload = function () {
   rpsPart1();
 };
 
+userId = localStorage.getItem("userId");
+document.getElementById("challenger").innerText = `挑戰者編號: ${userId}`;
+
+function finalResults() {
+  fetch(`https://event.setn.com/api/ghost2022/settle/${userId}`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+    },
+    body: JSON.stringify({
+      round: 10,
+      score: 180,
+    }),
+  })
+    .then((data) => {
+      return data.json();
+    })
+    .then((finalData) => {
+      console.log(finalData);
+      localStorage.setItem("finalResults", JSON.stringify(finalData));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  location.href = "/finalResults.html";
+}
+
 // timer 倒數
 
 var time = document.getElementById("timeBox");
@@ -146,6 +175,7 @@ function changeTime() {
       count += 1;
       score += 30;
       console.log("回合:", count, "分數:", score);
+      finalResults();
       alert("挑戰成功");
     } else if (score == 150 && finalResultDraw.innerText == "平手!") {
       firstTime = 3;
@@ -154,8 +184,8 @@ function changeTime() {
       round.innerText = `您好我是第  ${count} 回合 `;
       myScore.innerText = `您好我的分數是 ${score}`;
       return false;
-    } else {
     }
+    finalResults();
     firstTime = 15;
     count = 1;
     score = 0;
@@ -199,6 +229,7 @@ function firstTimerDown() {
         score = 0;
         round.innerText = `您好我是第  ${count} 回合 `;
         myScore.innerText = `您好我的分數是 ${score}`;
+        finalResults();
 
         clearInterval(firstTimerMinus);
         clearTimeout(secondTime);
@@ -251,6 +282,7 @@ function firstTimerDown() {
         score = 0;
         round.innerText = `您好我是第  ${count} 回合 `;
         myScore.innerText = `您好我的分數是 ${score}`;
+        finalResults();
 
         clearInterval(firstTimerMinus);
         clearTimeout(secondTime);
@@ -427,6 +459,7 @@ function rpsPart2() {
     if (rpsUserWins.style.display == "block" && keyCodePart2 == "a") {
       finalResult.innerText = "恭喜 準備進入下一輪";
       firstTimer.style.display = "none";
+
       clearTimeout(secondTime);
       secondTime = setTimeout(() => {
         rpsUserWins.style.display = "none";
@@ -438,6 +471,7 @@ function rpsPart2() {
     } else if (rpsUserWins.style.display == "block" && keyCodePart2 == "d") {
       finalResult.innerText = "sorry 出去再來";
       firstTimer.style.display = "none";
+      finalResults();
       clearTimeout(secondTime);
       secondTime = setTimeout(() => {
         rpsUserWins.style.display = "none";
@@ -463,6 +497,7 @@ function rpsPart2() {
     } else if (rpsUserLoses.style.display == "block" && keyCodePart2 == "a") {
       finalResultSecond.innerText = "sorry 出去再來";
       firstTimer.style.display = "none";
+      finalResults();
       clearTimeout(secondTime);
       secondTime = setTimeout(() => {
         rpsUserLoses.style.display = "none";
@@ -502,6 +537,7 @@ function rpsPart2() {
       } else {
         finalResult.innerText = "sorry 出去再來";
         firstTimer.style.display = "none";
+        finalResults();
         clearTimeout(secondTime);
         secondTime = setTimeout(() => {
           rpsUserWins.style.display = "none";
@@ -537,6 +573,7 @@ function rpsPart2() {
       } else {
         finalResultSecond.innerText = "sorry 出去再來";
         firstTimer.style.display = "none";
+        finalResults();
 
         clearTimeout(secondTime);
         secondTime = setTimeout(() => {

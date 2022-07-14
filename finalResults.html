@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <h1>hello</h1>
+    <div class="title">
+      <p id="challenger"></p>
+      <h1 id="challengerScore"></h1>
+    </div>
+    <div>
+      <button id="share">分享活動再玩一次</button>
+      <button id="share">分享個人成績至FB</button>
+    </div>
+    <div id="container"></div>
+    <script>
+      finalResults = JSON.parse(localStorage.getItem("finalResults"));
+
+      console.log(finalResults);
+      console.log(finalResults.rankings);
+
+      document.getElementById("challenger").innerText =
+        "挑戰者" + finalResults.id;
+      document.getElementById("challengerScore").innerText =
+        finalResults.score + "分";
+
+      let finalData = "";
+      finalResults.rankings.map((val) => {
+        finalData += `
+          <div class="wrapper" id='wrapper'>
+            <p id="ranking">TOP${val.no}</p>
+            <p id="wrappChallenger">挑戰者${val.user}</p>
+            <p id="wrapperScore">${val.score}分</p>
+        </div>
+          `;
+        if (finalResults.id == val.user) {
+          console.log("相同!!");
+          document.getElementById("wrapper").style.backgroundColor = "red";
+        }
+      });
+      document.getElementById("container").innerHTML = finalData;
+
+      // var score = 8787;
+      // var round = 1287;
+
+      // fetch("https://reqres.in/api/users", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     name: "User 87",
+      //     score: `${score}`,
+      //     round: `${round}`,
+      //   }),
+      // })
+      //   .then((data) => {
+      //     return data.json();
+      //   })
+      //   .then((finalData) => {
+      //     console.log(finalData);
+      //   })
+      //   .catch((err) => {
+      //     console.log(error);
+      //   });
+    </script>
+  </body>
+</html>

@@ -8,14 +8,14 @@
   </head>
   <body>
     <input type="text" id="userNameGet" />
-    <button id="btn" onclick="getUserNumber()">請輸入活動編號</button>
+    <a id="btn" onclick="getUserNumber()" target="_blank" href="game.html"
+      >請輸入活動編號</a
+    >
     <h1 id="userNumber">who r u</h1>
-
-    <button id="start" onclick="getUserId()">看懂了快點讓我開始</button>
 
     <script>
       function getUserNumber() {
-        const UserNumber = document.getElementById("userNameGet").value;
+        UserNumber = document.getElementById("userNameGet").value;
 
         if (!UserNumber) {
           alert("請不要空白");
@@ -34,22 +34,7 @@
           .catch((error) => {
             alert("請輸入正確編號OK?");
           });
-      }
-
-      function getUserId() {
-        const userId = document.getElementById("start");
-
-        if (!userId) {
-          alert("請不要空白");
-        }
-
-        fetch(`https://event.setn.com/api/ghost2022/play/0101`)
-          .then((data) => {
-            return data.json();
-          })
-          .then((finalData) => {
-            console.log(finalData);
-          });
+        localStorage.setItem("UserNumber", UserNumber);
       }
     </script>
   </body>
