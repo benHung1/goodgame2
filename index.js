@@ -29,7 +29,6 @@ function finalResults() {
     .catch((error) => {
       console.log(error);
     });
-  location.href = "/finalResults.html";
 }
 
 // timer 倒數
