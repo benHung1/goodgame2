@@ -14,8 +14,13 @@
       <h1 id="challengerScore"></h1>
     </div>
     <div>
-      <button id="share">分享活動再玩一次</button>
-      <button id="share">分享個人成績至FB</button>
+      <a
+        id="share"
+        target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Facts.setn.com%2Fevent%2Fghost2022"
+        >分享活動再玩一次</a
+      >
+      <a id="shareSelf" target="_blank">分享個人成績至FB</a>
     </div>
     <div id="container"></div>
     <script>
@@ -45,6 +50,19 @@
       });
       document.getElementById("container").innerHTML = finalData;
 
+      fetch(`https://event.setn.com/api/ghost2022/share/${finalResults.id}`)
+        .then((data) => {
+          return data.json();
+        })
+        .then((final) => {
+          console.log(final);
+          document
+            .getElementById("shareSelf")
+            .setAttribute("href", `${final.url}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       // var score = 8787;
       // var round = 1287;
 
