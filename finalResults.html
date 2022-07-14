@@ -37,7 +37,9 @@
       let finalData = "";
       finalResults.rankings.map((val) => {
         finalData += `
-          <div class="wrapper" id='wrapper'>
+          <div class="wrapper" id='wrapper'  style="background:${
+            val.isSelf == true ? "red" : ""
+          }">
             <p id="ranking">TOP${val.no}</p>
             <p id="wrappChallenger">挑戰者${val.user}</p>
             <p id="wrapperScore">${val.score}分</p>
