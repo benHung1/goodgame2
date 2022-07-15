@@ -3,20 +3,20 @@ window.onload = function () {
   rpsPart1();
 };
 
+userNumber = localStorage.getItem("UserNumber");
 userId = localStorage.getItem("userId");
-document.getElementById("challenger").innerText = `挑戰者編號: ${userId}`;
+document.getElementById("challenger").innerText = `挑戰者編號: ${userNumber}`;
 
 function finalResults() {
   fetch(`https://event.setn.com/api/ghost2022/settle/${userId}`, {
     method: "POST",
     mode: "cors",
     headers: {
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      round: 10,
-      score: 180,
+      round: `${count}`,
+      score: `${score}`,
     }),
   })
     .then((data) => {
@@ -319,7 +319,7 @@ function rpsPart1() {
 
       //  電腦出拳
 
-      opponent = "r";
+      opponent = choices[Math.floor(Math.random() * 3)];
       document.getElementById("choice").src = opponent + ".png";
 
       // 判斷使用者出了什麼
@@ -382,7 +382,7 @@ function rpsPart1() {
 
         // 電腦出拳
 
-        opponent = "r";
+        opponent = choices[Math.floor(Math.random() * 3)];
         document.getElementById("choice").src = opponent + ".png";
 
         clearTimeout(secondTime);
@@ -625,7 +625,7 @@ function clearPart1() {
 
         // 電腦出拳
 
-        opponent = "r";
+        opponent = choices[Math.floor(Math.random() * 3)];
         document.getElementById("choice").src = opponent + ".png";
 
         clearTimeout(secondTime);

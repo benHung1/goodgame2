@@ -25,12 +25,11 @@
     <div id="container"></div>
     <script>
       finalResults = JSON.parse(localStorage.getItem("finalResults"));
+      userNumber = localStorage.getItem("UserNumber");
 
       console.log(finalResults);
-      console.log(finalResults.rankings);
 
-      document.getElementById("challenger").innerText =
-        "挑戰者" + finalResults.id;
+      document.getElementById("challenger").innerText = "挑戰者" + userNumber;
       document.getElementById("challengerScore").innerText =
         finalResults.score + "分";
 
@@ -45,10 +44,6 @@
             <p id="wrapperScore">${val.score}分</p>
         </div>
           `;
-        if (finalResults.id == val.user) {
-          console.log("相同!!");
-          document.getElementById("wrapper").style.backgroundColor = "red";
-        }
       });
       document.getElementById("container").innerHTML = finalData;
 
